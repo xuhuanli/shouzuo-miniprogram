@@ -19,6 +19,7 @@
   display: flex;
   align-items: center;
   padding: 22rpx 20rpx;
+  margin-bottom: 20rpx;
   position: relative;
 }
 
@@ -103,18 +104,52 @@
   font-size: 27rpx;
 }
 
+/* 管理模式的删除角标：贴在卡片右上角的浅粉小角（卡片圆角 + overflow:hidden 正好把外侧两角收圆），
+   × 用两根圆头短线画，和详情页的乘号、加减号是一套 */
 .ci-del {
   position: absolute;
-  top: 10rpx;
-  right: 14rpx;
-  width: 40rpx;
-  height: 40rpx;
-  line-height: 36rpx;
-  text-align: center;
-  border-radius: 50%;
-  background: rgba(91, 70, 54, 0.5);
-  color: #fff;
-  font-size: 28rpx;
+  top: 0;
+  right: 0;
+  width: 64rpx;
+  height: 56rpx;
+  border-bottom-left-radius: 24rpx;
+  background: var(--accent-soft);
+  transition: background 0.15s ease;
+}
+
+.ci-del::before,
+.ci-del::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 22rpx;
+  height: 4rpx;
+  margin: -2rpx 0 0 -11rpx;
+  border-radius: 2rpx;
+  background: var(--accent-deep);
+  transition: transform 0.2s ease;
+}
+
+.ci-del::before {
+  transform: rotate(45deg);
+}
+
+.ci-del::after {
+  transform: rotate(-45deg);
+}
+
+/* 按下：底色加深一点，× 转一下 */
+.ci-del-press {
+  background: #F6D3DC;
+}
+
+.ci-del-press::before {
+  transform: rotate(135deg);
+}
+
+.ci-del-press::after {
+  transform: rotate(45deg);
 }
 
 .cart-tip {
@@ -125,13 +160,13 @@
   line-height: 1.6;
 }
 
-/* 结算条紧贴底部导航：不再额外留 safe-area（导航栏自己已经让开了），
+/* 结算条紧贴在底部导航上沿（--tabbar-h 已含安全区），
    上下留一样的空隙，不留一道白边；底色用莫兰迪豆沙粉，和奶黄导航区分开 */
 .cart-bar {
   position: fixed;
   left: 0;
   right: 0;
-  bottom: 0;
+  bottom: var(--tabbar-h);
   display: flex;
   align-items: center;
   padding: 16rpx 28rpx;
@@ -203,5 +238,5 @@
 }
 
 .safe-space {
-  height: 140rpx;
+  height: calc(140rpx + var(--tabbar-h));
 }

@@ -1,4 +1,5 @@
 const cart = require('../../utils/cart.js');
+const preview = require('../../utils/preview.js');
 
 Page({
   data: {
@@ -114,6 +115,11 @@ Page({
     }
     wx.setStorageSync('sz_checkout', items);
     wx.navigateTo({ url: '/pages/custom/custom' });
+  },
+
+  // 点作品小图：购物车里所有作品图一起，左右滑着看
+  previewImg(e) {
+    preview.open(this.data.list.map((x) => x.img), e.currentTarget.dataset.src);
   },
 
   goGallery() {

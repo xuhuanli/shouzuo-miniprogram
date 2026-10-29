@@ -1,0 +1,31 @@
+<view class="pv">
+  <swiper class="pv-swiper" current="{{current}}" disable-touch="{{zoomed}}" bindchange="onChange">
+    <swiper-item wx:for="{{urls}}" wx:key="index">
+      <movable-area class="pv-area" scale-area>
+        <movable-view
+          class="pv-view"
+          direction="all"
+          scale
+          scale-min="1"
+          scale-max="4"
+          scale-value="{{scales[index]}}"
+          out-of-bounds="{{false}}"
+          damping="40"
+          bindscale="onScale"
+          bindtap="onTap"
+        >
+          <image class="pv-img" src="{{item}}" mode="aspectFit" />
+        </movable-view>
+      </movable-area>
+    </swiper-item>
+  </swiper>
+
+  <!-- 顶部：关闭 + 第几张 -->
+  <view class="pv-top" style="padding-top: {{statusTop}}px;">
+    <view class="pv-close" hover-class="pv-close-press" bindtap="close"></view>
+    <text class="pv-count" wx:if="{{urls.length > 1}}">{{current + 1}} / {{urls.length}}</text>
+  </view>
+
+  <!-- 进来时提示一下怎么放大，几秒后淡出 -->
+  <view class="pv-hint {{hintHide ? 'hide' : ''}}">双指捏合或双击放大，看看针脚细节</view>
+</view>

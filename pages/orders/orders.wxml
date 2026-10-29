@@ -9,13 +9,20 @@
           class="o-status {{item.status === '已取消' ? 'off' : ''}} {{item.status === '已发货' || item.status === '已完成' ? 'ship' : ''}}"
         >{{item.status}}</text>
       </view>
-      <view class="o-style">{{item.styleName}}</view>
-      <view class="o-line">材质：{{item.grade || '普通'}}　× {{item.qty}}</view>
-      <view class="o-line" wx:if="{{item.tableFabric}}">表布：{{item.tableFabric}}</view>
-      <view class="o-line" wx:if="{{item.liningFabric}}">里布：{{item.liningFabric}}</view>
+      <!-- 一张单里的几件作品 -->
+      <view class="o-item" wx:for="{{item.items}}" wx:for-item="it" wx:for-index="ii" wx:key="ii">
+        <image class="o-img" wx:if="{{it.img}}" src="{{it.img}}" mode="aspectFill" data-id="{{item.id}}" data-src="{{it.img}}" bindtap="previewImg" />
+        <view class="o-item-main">
+          <view class="o-item-top">
+            <text class="o-style">{{it.styleName}}</text>
+            <text class="o-qty">× {{it.qty}}</text>
+          </view>
+          <view class="o-line">{{it.grade || '普通'}}<text wx:if="{{it.tableFabric}}">　表布 {{it.tableFabric}}</text><text wx:if="{{it.liningFabric}}">　里布 {{it.liningFabric}}</text></view>
+        </view>
+      </view>
       <view class="o-line" wx:if="{{item.urgent}}">加急</view>
       <view class="o-line" wx:if="{{item.remark}}">备注：{{item.remark}}</view>
-      <view class="o-line">{{item.priceEstimate}}</view>
+      <view class="o-fee">{{item.feeText}}</view>
 
       <!-- 物流信息：店主填了就会出现在这里 -->
       <view class="o-track" wx:if="{{item.trackingNo}}">
@@ -28,7 +35,9 @@
 
       <view class="o-actions">
         <view class="o-btn" bindtap="copyOrder" data-id="{{item.id}}">复制预约单</view>
-        <view class="o-btn" wx:if="{{item.status === '待确认'}}" bindtap="cancelOrder" data-id="{{item.id}}">取消预约</view>
+        <!-- 本地模式只留「删除」：单只在自己手机上，取消和删除对店主没区别；
+             云端模式反过来只留「取消预约」：删了店主后台也跟着没了，取消才能让店主看到 -->
+        <view class="o-btn" wx:if="{{cloud && item.status === '待确认'}}" bindtap="cancelOrder" data-id="{{item.id}}">取消预约</view>
         <view class="o-btn del" wx:if="{{!cloud}}" bindtap="removeOrder" data-id="{{item.id}}">删除</view>
       </view>
     </view>

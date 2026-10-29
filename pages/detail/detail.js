@@ -1,5 +1,6 @@
 const db = require('../../utils/db.js');
 const cart = require('../../utils/cart.js');
+const preview = require('../../utils/preview.js');
 
 const DEF_GRADE = '普通';
 
@@ -76,7 +77,7 @@ Page({
   },
 
   previewBig(e) {
-    wx.previewImage({ urls: this.data.p.images, current: e.currentTarget.dataset.src });
+    preview.open(this.data.p.images, e.currentTarget.dataset.src);
   },
 
   pickGrade(e) {

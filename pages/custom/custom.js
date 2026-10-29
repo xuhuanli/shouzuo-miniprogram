@@ -1,6 +1,7 @@
 const db = require('../../utils/db.js');
 const store = require('../../utils/store.js');
 const cart = require('../../utils/cart.js');
+const preview = require('../../utils/preview.js');
 
 const FREE_SHIP = 69;
 const SHIP_FEE = 6;
@@ -91,32 +92,32 @@ Page({
     wx.showLoading({ title: '提交中…', mask: true });
 
     try {
-      const multi = d.items.length > 1;
-      const savedList = [];
-
-      // 每件商品各自一个独立编码，互不重复
-      for (let i = 0; i < d.items.length; i++) {
-        const it = d.items[i];
-        const amount = Math.round(it.price * it.qty * 100) / 100;
-        const order = {
-          no: store.genOrderNo(),
+      // 一次预约 = 一张单：购物车里勾的几件都放进 items，费用按整单算
+      const order = {
+        no: store.genOrderNo(),
+        items: d.items.map((it) => ({
           styleId: it.styleId,
           styleName: it.styleName,
+          img: it.img,
           grade: it.grade,
           tableFabric: it.tableFabric,
           liningFabric: it.liningFabric,
           qty: it.qty,
-          urgent: d.urgent,
-          remark: d.remark,
-          nickname: d.nickname,
-          receiver: d.receiver,
-          // 运费按整批算一次，挂在第一张单上
-          shippingFee: i === 0 ? d.shipping : 0,
-          priceEstimate: '参考价 ¥' + amount
-        };
-        const saved = await db.addOrder(order);
-        savedList.push(Object.assign({}, order, saved));
-      }
+          price: it.price,
+          amount: Math.round(it.price * it.qty * 100) / 100
+        })),
+        count: d.count,
+        urgent: d.urgent,
+        remark: d.remark,
+        nickname: d.nickname,
+        receiver: d.receiver,
+        goodsTotal: d.goodsTotal,
+        urgentFee: d.urgentFee,
+        shippingFee: d.shipping,
+        payTotal: d.payTotal,
+        priceEstimate: '参考价 ¥' + d.payTotal
+      };
+      const saved = Object.assign({}, order, await db.addOrder(order));
 
       store.setContact({ nickname: d.nickname, receiver: d.receiver });
 
@@ -126,9 +127,9 @@ Page({
 
       wx.hideLoading();
       const cloud = db.isCloud();
-      const text = savedList.map((o) => store.buildOrderText(o)).join('\n\n');
+      const text = store.buildOrderText(saved);
 
-      // 本地模式下店主收不到这张单，先把整批预约单复制到剪贴板
+      // 本地模式下店主收不到这张单，先把预约单复制到剪贴板
       if (!cloud) wx.setClipboardData({ data: text });
 
       // 用页面自己的弹窗，不用 wx.showModal：系统弹窗对 \n 的处理不稳定（换行会变空格），
@@ -158,6 +159,11 @@ Page({
   doneOrders() {
     this.setData({ doneShow: false });
     wx.switchTab({ url: '/pages/orders/orders' });
+  },
+
+  // 点作品小图：这次要预约的几件一起看
+  previewImg(e) {
+    preview.open(this.data.items.map((x) => x.img), e.currentTarget.dataset.src);
   },
 
   toast(title) {

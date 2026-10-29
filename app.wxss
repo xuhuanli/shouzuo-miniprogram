@@ -15,6 +15,9 @@
   font-display: swap;
 }
 page {
+  /* 自定义底部导航（custom-tab-bar）盖在页面上，不会像原生导航那样把页面往上让；
+     tab 页里贴底的条、页面底部留白都要加上这段高度 */
+  --tabbar-h: calc(48px + env(safe-area-inset-bottom));
   --bg: #FBF3F4;
   --card: #FFFFFF;
   --ink: #5B4636;

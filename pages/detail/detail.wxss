@@ -282,6 +282,8 @@
   align-items: center;
   height: 60rpx;
   padding: 0 6rpx;
+  /* 和右边按钮的间距放在这里：button 的 margin 会被微信默认样式吃掉，靠不住 */
+  margin-right: 32rpx;
   border-radius: 999rpx;
   background: var(--accent-soft);
 }
@@ -343,7 +345,7 @@
   min-width: 0;
   /* 微信 button 自带固定宽度，不清掉的话 flex 收不窄 */
   width: auto !important;
-  margin: 0 0 0 24rpx;
+  margin: 0 !important;
   padding: 0;
   height: 84rpx;
   line-height: 84rpx;

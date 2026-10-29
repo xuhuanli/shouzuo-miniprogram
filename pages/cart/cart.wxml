@@ -11,7 +11,7 @@
         <text wx:if="{{item.checked}}">✓</text>
       </view>
 
-      <image class="ci-img" src="{{item.img}}" mode="aspectFill" data-key="{{item.key}}" />
+      <image class="ci-img" src="{{item.img}}" mode="aspectFill" data-src="{{item.img}}" bindtap="previewImg" />
 
       <view class="ci-main">
         <view class="ci-name">{{item.styleName}}</view>
@@ -26,7 +26,7 @@
         </view>
       </view>
 
-      <view class="ci-del" wx:if="{{manage}}" data-key="{{item.key}}" bindtap="removeOne">×</view>
+      <view class="ci-del" wx:if="{{manage}}" hover-class="ci-del-press" data-key="{{item.key}}" bindtap="removeOne"></view>
     </view>
 
     <view class="cart-tip">同款同材质会自动合并成一条；改数量后合计会跟着变。</view>

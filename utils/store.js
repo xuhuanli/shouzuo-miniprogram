@@ -2,6 +2,8 @@
 // 说明：当前版本没有后台服务器，预约单保存在手机本地，
 // 通过"复制预约单"粘贴给店主微信确认。接后台时只需替换本文件。
 
+const local = require('../data/products.js');
+
 const KEY = 'sz_orders';
 const CONTACT_KEY = 'sz_contact';
 
@@ -46,22 +48,65 @@ function setContact(contact) {
   wx.setStorageSync(CONTACT_KEY, contact);
 }
 
+// 一张单里的作品列表。现在一次预约是一张单、作品放在 items 里；
+// 老订单是一件一张单，字段直接挂在订单上，这里统一包成一件的 items。
+// 老订单当时没存图，按 styleId 去本地作品里找回封面
+function orderItems(order) {
+  if (order.items && order.items.length) return order.items;
+  const p = order.styleId ? local.getById(order.styleId) : null;
+  return [
+    {
+      styleName: order.styleName,
+      img: p ? p.img : '',
+      grade: order.grade,
+      tableFabric: order.tableFabric,
+      liningFabric: order.liningFabric,
+      qty: order.qty
+    }
+  ];
+}
+
+// 订单卡底部那行费用：件数 / 加急费 / 运费 / 参考价
+function feeLine(order) {
+  if (order.payTotal == null) {
+    // 老订单没有分项费用，只有件数、运费（同批只挂在第一张）和参考价
+    const parts = ['共 ' + (order.qty || 1) + ' 件'];
+    if (order.shippingFee) parts.push('运费 ¥' + order.shippingFee);
+    if (order.priceEstimate) parts.push(order.priceEstimate);
+    return parts.join(' · ');
+  }
+  const parts = ['共 ' + (order.count || orderItems(order).length) + ' 件'];
+  if (order.urgentFee) parts.push('加急 ¥' + order.urgentFee);
+  parts.push(order.shippingFee ? '运费 ¥' + order.shippingFee : '包邮');
+  parts.push('参考价 ¥' + order.payTotal);
+  return parts.join(' · ');
+}
+
 // 生成可复制的预约单文字
 function buildOrderText(order) {
-  const lines = [
-    '【定制预约单】',
-    '编号：' + order.no,
-    '款式：' + order.styleName,
-    '材质：' + (order.grade || '普通'),
-    '数量：' + order.qty,
-    '加急：' + (order.urgent ? '是（加急费另算）' : '否')
-  ];
-  // priceEstimate 存的是「参考价 ¥25.9」（卡片上直接用），这里去掉前缀，
-  // 免得拼成「参考价：参考价 ¥25.9」
-  const price = String(order.priceEstimate || '').replace(/^参考价\s*[:：]?\s*/, '');
-  if (price) lines.push('参考价：' + price);
-  if (order.tableFabric) lines.push('表布：' + order.tableFabric);
-  if (order.liningFabric) lines.push('里布：' + order.liningFabric);
+  const items = orderItems(order);
+  const lines = ['【定制预约单】', '编号：' + order.no];
+
+  items.forEach((it, i) => {
+    const head = (items.length > 1 ? i + 1 + '. ' : '') + it.styleName;
+    lines.push(head + '　' + (it.grade || '普通') + ' × ' + it.qty + (it.amount != null ? '　¥' + it.amount : ''));
+    const fabric = [];
+    if (it.tableFabric) fabric.push('表布：' + it.tableFabric);
+    if (it.liningFabric) fabric.push('里布：' + it.liningFabric);
+    if (fabric.length) lines.push((items.length > 1 ? '　 ' : '') + fabric.join('　'));
+  });
+
+  lines.push('加急：' + (order.urgent ? '是' : '否'));
+  if (order.payTotal != null) {
+    lines.push('商品合计：¥' + order.goodsTotal);
+    if (order.urgentFee) lines.push('加急费：¥' + order.urgentFee);
+    lines.push('运费：' + (order.shippingFee ? '¥' + order.shippingFee : '包邮'));
+    lines.push('参考价：¥' + order.payTotal);
+  } else {
+    // 老订单的 priceEstimate 是「参考价 ¥25.9」，去掉前缀，免得拼成「参考价：参考价 ¥25.9」
+    const price = String(order.priceEstimate || '').replace(/^参考价\s*[:：]?\s*/, '');
+    if (price) lines.push('参考价：' + price);
+  }
   if (order.remark) lines.push('备注：' + order.remark);
   if (order.nickname) lines.push('微信昵称：' + order.nickname);
   if (order.receiver) lines.push('收货信息：' + order.receiver);
@@ -69,7 +114,7 @@ function buildOrderText(order) {
   return lines.join('\n');
 }
 
-// 订单编号：时间到秒 + 4 位随机，保证每个商品每次下单都不一样
+// 订单编号：时间到秒 + 4 位随机，保证每次预约的单号都不一样
 // 同一秒内连下多单时，随机尾号理论上会撞（1/10000），所以生成后要和
 // ①已有订单  ②本次运行里已经发出去的编号  都比对一遍，撞了就重摇
 const issued = {};
@@ -114,6 +159,8 @@ module.exports = {
   updateOrder,
   getContact,
   setContact,
+  orderItems,
+  feeLine,
   buildOrderText,
   genOrderNo
 };

@@ -4,7 +4,7 @@
     <!-- 购物车带过来的作品 -->
     <view class="f-label first">要预约的作品（{{count}} 件）</view>
     <view class="ck-item" wx:for="{{items}}" wx:key="key">
-      <image class="ck-img" src="{{item.img}}" mode="aspectFill" />
+      <image class="ck-img" src="{{item.img}}" mode="aspectFill" data-src="{{item.img}}" bindtap="previewImg" />
       <view class="ck-main">
         <view class="ck-name">{{item.styleName}}</view>
         <view class="ck-spec">{{item.grade}}　表布 {{item.tableFabric || '待定'}}　里布 {{item.liningFabric || '待定'}}</view>

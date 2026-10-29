@@ -1,5 +1,6 @@
 const db = require('../../utils/db.js');
 const store = require('../../utils/store.js');
+const preview = require('../../utils/preview.js');
 
 Page({
   data: {
@@ -23,7 +24,13 @@ Page({
     try {
       const list = (await db.myOrders()) || [];
       this.setData({
-        orders: list.map((o) => Object.assign({}, o, { id: o._id || o.id })),
+        orders: list.map((o) =>
+          Object.assign({}, o, {
+            id: o._id || o.id,
+            items: store.orderItems(o),
+            feeText: store.feeLine(o)
+          })
+        ),
         loading: false
       });
     } catch (e) {
@@ -40,6 +47,14 @@ Page({
       data: store.buildOrderText(order),
       success: () => wx.showToast({ title: '预约单已复制', icon: 'none' })
     });
+  },
+
+  // 点作品小图：打开预览页，这张单里的几张图可以左右滑着看
+  previewImg(e) {
+    const { id, src } = e.currentTarget.dataset;
+    const order = this.data.orders.find((o) => o.id === id);
+    if (!order) return;
+    preview.open(order.items.map((it) => it.img), src);
   },
 
   // 复制物流单号，方便去快递 App / 小程序里查

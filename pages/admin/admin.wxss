@@ -158,6 +158,21 @@
   color: var(--accent-deep);
 }
 
+/* 一张单多件作品：每件之间虚线隔开 */
+.o-item {
+  padding: 8rpx 0;
+  border-bottom: 1px dashed var(--line);
+}
+
+.o-item:last-of-type {
+  margin-bottom: 6rpx;
+}
+
+.o-fee {
+  font-weight: 600;
+  color: var(--accent-deep);
+}
+
 .o-contact {
   display: flex;
   gap: 16rpx;

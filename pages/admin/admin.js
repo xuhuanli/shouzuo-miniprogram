@@ -1,5 +1,6 @@
 const db = require('../../utils/db.js');
 const local = require('../../data/products.js');
+const store = require('../../utils/store.js');
 
 const EXPRESS = db.EXPRESS;
 
@@ -117,6 +118,8 @@ Page({
     const next = NEXT_STEP[status];
     return Object.assign({}, o, {
       id: o._id,
+      items: store.orderItems(o),
+      feeText: store.feeLine(o),
       expressIndex: Math.max(0, EXPRESS.indexOf(o.express || EXPRESS[0])),
       actionLabel: next ? next.label : '',
       actionTo: next ? next.to : '',

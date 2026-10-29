@@ -65,10 +65,53 @@
   letter-spacing: 1rpx;
 }
 
+/* 一张单里的每件作品：小图 + 名字 × 数量 + 材质面料，件与件之间虚线隔开 */
+.o-item {
+  display: flex;
+  align-items: center;
+  padding: 16rpx 0;
+  border-bottom: 1px dashed var(--line);
+}
+
+.o-img {
+  flex-shrink: 0;
+  width: 96rpx;
+  height: 96rpx;
+  margin-right: 20rpx;
+  border-radius: 12rpx;
+}
+
+.o-item-main {
+  flex: 1;
+  min-width: 0;
+}
+
+.o-item-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 4rpx;
+}
+
 .o-style {
-  font-size: 35rpx;
+  font-size: 31rpx;
   font-weight: 600;
-  margin-bottom: 12rpx;
+}
+
+.o-qty {
+  flex-shrink: 0;
+  margin-left: 16rpx;
+  font-size: 24rpx;
+  color: var(--sub);
+}
+
+/* 整单费用：件数 · 加急 · 运费 · 参考价 */
+.o-fee {
+  margin-top: 14rpx;
+  text-align: right;
+  font-size: 26rpx;
+  font-weight: 600;
+  color: var(--accent-deep);
 }
 
 .o-line {
@@ -124,12 +167,12 @@
   border-color: #EFC3CD;
 }
 
-/* 页面底部：说明文字 + 关于小店入口，钉在底部导航栏正上方（tabBar 页面的 bottom:0 就是导航栏上沿） */
+/* 页面底部：说明文字 + 关于小店入口，钉在底部导航栏正上方 */
 .o-foot {
   position: fixed;
   left: 0;
   right: 0;
-  bottom: 0;
+  bottom: var(--tabbar-h);
   z-index: 20;
   padding: 14rpx 32rpx;
   background: rgba(251, 243, 244, 0.96);
@@ -158,5 +201,5 @@
 
 /* 给钉在底部的说明条让出位置，最后一张订单不会被盖住 */
 .page-pad {
-  padding-bottom: 190rpx;
+  padding-bottom: calc(190rpx + var(--tabbar-h));
 }

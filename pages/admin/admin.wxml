@@ -43,10 +43,13 @@
           >{{item.status}}</text>
         </view>
 
-        <view class="o-style">{{item.styleName}}</view>
-        <view class="o-line">{{item.grade || '普通'}}　× {{item.qty}}<text wx:if="{{item.tableFabric}}">　·　表布 {{item.tableFabric}}</text><text wx:if="{{item.liningFabric}}">　·　里布 {{item.liningFabric}}</text></view>
+        <!-- 一张单里的几件作品 -->
+        <view class="o-item" wx:for="{{item.items}}" wx:for-item="it" wx:for-index="ii" wx:key="ii">
+          <view class="o-style">{{it.styleName}}</view>
+          <view class="o-line">{{it.grade || '普通'}}　× {{it.qty}}<text wx:if="{{it.tableFabric}}">　·　表布 {{it.tableFabric}}</text><text wx:if="{{it.liningFabric}}">　·　里布 {{it.liningFabric}}</text></view>
+        </view>
         <view class="o-line" wx:if="{{item.urgent}}">加急</view>
-        <view class="o-line">{{item.priceEstimate}}</view>
+        <view class="o-line o-fee">{{item.feeText}}</view>
 
         <view class="o-contact">
           <text wx:if="{{item.nickname}}" class="o-chip" data-v="{{item.nickname}}" bindtap="copyText">微信昵称 {{item.nickname}}</text>

@@ -70,7 +70,7 @@
   position: fixed;
   left: 0;
   right: 0;
-  bottom: 0;
+  bottom: var(--tabbar-h);
   height: 84rpx;
   display: flex;
   align-items: center;
@@ -88,5 +88,5 @@
 
 /* 留出这条的高度，别让最后一行作品被挡住 */
 .page-pad {
-  padding-bottom: 128rpx;
+  padding-bottom: calc(128rpx + var(--tabbar-h));
 }
