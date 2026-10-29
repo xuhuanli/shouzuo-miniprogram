@@ -1,0 +1,25 @@
+<view class="tb">
+  <view class="tb-inner">
+    <!-- 滑动的粉色底块，跟着选中项走 -->
+    <view class="tb-slider" style="transform: translateX({{selected * 100}}%);">
+      <view class="tb-pill"></view>
+    </view>
+
+    <view
+      wx:for="{{list}}"
+      wx:key="pagePath"
+      class="tb-item {{selected === index ? 'on' : ''}}"
+      hover-class="tb-press"
+      hover-stay-time="80"
+      data-i="{{index}}"
+      bindtap="switchTab"
+    >
+      <view class="tb-icon-wrap">
+        <image class="tb-icon off" src="./icons/{{item.icon}}.svg" />
+        <image class="tb-icon on" src="./icons/{{item.icon}}-on.svg" />
+        <text class="tb-badge" wx:if="{{index === 2 && badge}}">{{badge}}</text>
+      </view>
+      <text class="tb-text">{{item.text}}</text>
+    </view>
+  </view>
+</view>

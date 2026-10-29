@@ -50,6 +50,11 @@ Page({
     }
   },
 
+  onShow() {
+    const bar = this.getTabBar && this.getTabBar();
+    if (bar) bar.refresh(0);
+  },
+
   goDetail(e) {
     wx.navigateTo({
       url: '/pages/detail/detail?id=' + e.currentTarget.dataset.id

@@ -14,6 +14,9 @@ Page({
   },
 
   async onShow() {
+    const bar = this.getTabBar && this.getTabBar();
+    if (bar) bar.refresh(1);
+
     // 从管理页改完价格回到这里时刷新
     if (this.all) {
       this.all = await db.getProducts();

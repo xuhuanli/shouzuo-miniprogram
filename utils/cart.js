@@ -48,19 +48,17 @@ function checkedItems() {
   return getCart().filter((x) => x.checked);
 }
 
-// 底部 tab 购物车角标
-function syncBadge(list) {
-  const arr = list || getCart();
-  const n = arr.reduce((s, x) => s + (x.qty || 1), 0);
-  try {
-    if (n > 0) {
-      wx.setTabBarBadge({ index: 2, text: n > 99 ? '99+' : String(n) });
-    } else {
-      wx.removeTabBarBadge({ index: 2 });
-    }
-  } catch (e) {
-    // 非 tabBar 页面调用会报错，忽略
-  }
+function count(list) {
+  return (list || getCart()).reduce((s, x) => s + (x.qty || 1), 0);
 }
 
-module.exports = { getCart, setCart, add, update, remove, toggleAll, checkedItems, syncBadge };
+// 底部 tab 购物车角标：用的是自定义导航（custom-tab-bar），wx.setTabBarBadge 不起作用，
+// 只能直接改当前页面上的导航；非 tab 页没有导航，跳过即可，回到 tab 页时 onShow 会再刷一次
+function syncBadge(list) {
+  const pages = getCurrentPages();
+  const page = pages[pages.length - 1];
+  const bar = page && typeof page.getTabBar === 'function' && page.getTabBar();
+  if (bar && bar.setBadge) bar.setBadge(count(list));
+}
+
+module.exports = { getCart, setCart, add, update, remove, toggleAll, checkedItems, count, syncBadge };
