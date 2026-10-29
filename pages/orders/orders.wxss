@@ -1,5 +1,6 @@
+/* 下内边距别再压小：卡片是 overflow:hidden，按钮离下边缘太近，真机上下边框会被裁到 */
 .order {
-  padding: 32rpx 36rpx 20rpx;
+  padding: 32rpx 36rpx 28rpx;
   margin-bottom: 28rpx;
 }
 
@@ -113,7 +114,8 @@
   white-space: nowrap;
   color: var(--accent-deep);
   background: transparent;
-  border: 1rpx solid var(--accent);
+  /* 用 1px 不用 1rpx：1rpx 在真机上不足 1 个物理像素，按钮下边框会被吃掉、看着像被裁了 */
+  border: 1px solid var(--accent);
   border-radius: 999rpx;
 }
 
