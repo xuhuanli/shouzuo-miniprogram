@@ -1,0 +1,108 @@
+<view class="page-pad" wx:if="{{p}}">
+
+  <!-- 作品图：可左右滑动看多张 -->
+  <view class="d-gallery">
+    <swiper
+      class="d-swiper"
+      circular="{{p.images.length > 1}}"
+      indicator-dots="{{p.images.length > 1}}"
+      indicator-color="rgba(255,255,255,.55)"
+      indicator-active-color="#EC8FA5"
+      bindchange="onSwiper"
+    >
+      <swiper-item wx:for="{{p.images}}" wx:key="*this">
+        <image class="d-img" src="{{item}}" mode="aspectFill" bindtap="previewBig" data-src="{{item}}" />
+      </swiper-item>
+    </swiper>
+    <view class="d-count" wx:if="{{p.images.length > 1}}">{{current + 1}} / {{p.images.length}}</view>
+  </view>
+
+  <!-- 名字 + 价格 -->
+  <view class="d-head">
+    <view class="d-name serif">{{p.name}}</view>
+    <view class="d-price price">¥{{price}}<text class="unit"> /{{p.unit}}</text></view>
+  </view>
+  <view class="d-priceline">{{priceLine}}</view>
+
+  <!-- 关于这件作品：描述 + 尺寸 -->
+  <view class="card d-block">
+    <view class="d-label">关于这件作品</view>
+    <view class="d-desc">{{p.desc}}</view>
+    <view class="d-size">
+      <text class="d-size-k">尺寸</text>
+      <text class="d-size-v">{{p.size || '以沟通尺寸为准'}}</text>
+    </view>
+  </view>
+
+  <!-- 选面料：先挑普通/缎面，下面的表布里布跟着换 -->
+  <view class="card d-block">
+    <view class="d-label">选面料</view>
+
+    <view class="fb-grades">
+      <view
+        class="fb-grade {{gradeIndex === i ? 'on' : ''}}"
+        wx:for="{{p.grades}}"
+        wx:key="k"
+        wx:for-index="i"
+        bindtap="pickGrade"
+        data-i="{{i}}"
+      >
+        <text class="fb-grade-k">{{item.k}}</text>
+        <text class="fb-grade-p">¥{{item.price}}</text>
+      </view>
+    </view>
+
+    <view class="fb-box">
+      <view class="fb-head">
+        <text class="fb-t">表布</text>
+        <text class="fb-hint">左右滑动看可选面料</text>
+      </view>
+      <scroll-view class="fb-scroll" scroll-x enable-flex wx:if="{{tableList.length}}">
+        <view
+          class="fb-item {{tableIndex === i ? 'on' : ''}}"
+          wx:for="{{tableList}}"
+          wx:key="img"
+          wx:for-index="i"
+          bindtap="pickTable"
+          data-i="{{i}}"
+        >
+          <image class="fb-img" src="{{item.img}}" mode="aspectFill" />
+          <view class="fb-name">{{item.n}}</view>
+        </view>
+      </scroll-view>
+      <view class="fb-empty" wx:else>表布图还没上传，预约时和店主确认</view>
+      <view class="fb-fb" wx:if="{{tableFallback}}">这个材质的表布还没单独配，先按现有布料选</view>
+    </view>
+
+    <view class="fb-box">
+      <view class="fb-head">
+        <text class="fb-t">里布</text>
+        <text class="fb-hint">左右滑动看可选面料</text>
+      </view>
+      <scroll-view class="fb-scroll" scroll-x enable-flex wx:if="{{liningList.length}}">
+        <view
+          class="fb-item {{liningIndex === i ? 'on' : ''}}"
+          wx:for="{{liningList}}"
+          wx:key="img"
+          wx:for-index="i"
+          bindtap="pickLining"
+          data-i="{{i}}"
+        >
+          <image class="fb-img" src="{{item.img}}" mode="aspectFill" />
+          <view class="fb-name">{{item.n}}</view>
+        </view>
+      </scroll-view>
+      <view class="fb-empty" wx:else>里布图还没上传，预约时和店主确认</view>
+      <view class="fb-fb" wx:if="{{liningFallback}}">这个材质的里布还没单独配，先按现有布料选</view>
+    </view>
+  </view>
+
+  <view class="bottom-bar">
+    <view class="bar-price">
+      <text class="price">¥{{price}}</text>
+      <text class="bar-unit">起</text>
+    </view>
+    <button class="btn-primary bar-btn" bindtap="addToCart">加入购物车</button>
+  </view>
+  <view class="safe-space"></view>
+</view>

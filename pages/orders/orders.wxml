@@ -1,0 +1,52 @@
+<view class="page-pad">
+  <block wx:if="{{orders.length}}">
+    <view class="order card" wx:for="{{orders}}" wx:key="id">
+      <view class="o-head">
+        <text class="o-no">{{item.no}}</text>
+        <!-- 状态只有接了云开发才有意义（本地模式店主改不了别人手机上的单），所以只在云端显示 -->
+        <text
+          wx:if="{{cloud}}"
+          class="o-status {{item.status === '已取消' ? 'off' : ''}} {{item.status === '已发货' || item.status === '已完成' ? 'ship' : ''}}"
+        >{{item.status}}</text>
+      </view>
+      <view class="o-style">{{item.styleName}}</view>
+      <view class="o-line">材质：{{item.grade || '普通'}}　× {{item.qty}}</view>
+      <view class="o-line" wx:if="{{item.tableFabric}}">表布：{{item.tableFabric}}</view>
+      <view class="o-line" wx:if="{{item.liningFabric}}">里布：{{item.liningFabric}}</view>
+      <view class="o-line" wx:if="{{item.urgent}}">加急</view>
+      <view class="o-line" wx:if="{{item.remark}}">备注：{{item.remark}}</view>
+      <view class="o-line">{{item.priceEstimate}}</view>
+
+      <!-- 物流信息：店主填了就会出现在这里 -->
+      <view class="o-track" wx:if="{{item.trackingNo}}">
+        <view class="o-track-head">
+          <text class="o-track-t">物流</text>
+          <text class="o-track-copy" bindtap="copyTracking" data-id="{{item.id}}">复制单号</text>
+        </view>
+        <view class="o-track-body">{{item.express || '快递'}}　{{item.trackingNo}}</view>
+      </view>
+
+      <view class="o-actions">
+        <view class="o-btn" bindtap="copyOrder" data-id="{{item.id}}">复制预约单</view>
+        <view class="o-btn" wx:if="{{item.status === '待确认'}}" bindtap="cancelOrder" data-id="{{item.id}}">取消预约</view>
+        <view class="o-btn del" wx:if="{{!cloud}}" bindtap="removeOrder" data-id="{{item.id}}">删除</view>
+      </view>
+    </view>
+  </block>
+
+  <view class="empty" wx:elif="{{loading}}">
+    <view>加载中…</view>
+  </view>
+
+  <view class="empty" wx:else>
+    <view class="icon">🪡</view>
+    <view>还没有预约，去作品里挑一件吧</view>
+    <button class="btn-primary empty-btn" bindtap="goGallery">去挑作品</button>
+  </view>
+
+  <!-- 贴底：说明 + 关于小店入口，固定在底部导航栏正上方 -->
+  <view class="o-foot">
+    <view class="tip" wx:if="{{orders.length}}">{{cloud ? '订单已同步到云端，店主在后台更新进度和物流单号后，这里会自动显示。' : '点「复制预约单」发给主理人，才算真正排上队。'}}</view>
+    <view class="about-entry" bindtap="goAbout">关于小店 · 手作流程 →</view>
+  </view>
+</view>

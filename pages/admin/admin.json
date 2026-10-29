@@ -1,0 +1,6 @@
+{
+  "usingComponents": {},
+  "navigationBarTitleText": "店主管理",
+  "enablePullDownRefresh": true,
+  "backgroundTextStyle": "dark"
+}

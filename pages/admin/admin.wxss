@@ -1,0 +1,538 @@
+.tip-card {
+  padding: 36rpx;
+}
+
+.tip-t {
+  font-size: 32rpx;
+  font-weight: 600;
+  margin-bottom: 12rpx;
+}
+
+.tip-b {
+  font-size: 25rpx;
+  color: var(--sub);
+  line-height: 1.6;
+}
+
+.seed-btn {
+  margin-top: 28rpx;
+}
+
+/* 登录 */
+.login-card {
+  padding: 48rpx 40rpx;
+  margin-top: 40rpx;
+  text-align: center;
+}
+
+.login-t {
+  font-size: 44rpx;
+  font-weight: 700;
+  letter-spacing: 4rpx;
+}
+
+.login-b {
+  font-size: 24rpx;
+  color: var(--sub);
+  margin: 10rpx 0 32rpx;
+}
+
+/* 单行输入框统一给死高度，避免上下 padding 把内容挤没 */
+.login-input {
+  height: 88rpx;
+  line-height: 88rpx;
+  padding: 0 24rpx;
+  box-sizing: border-box;
+  background: var(--bg);
+  border: 1rpx solid var(--line);
+  border-radius: 16rpx;
+  font-size: 28rpx;
+  text-align: center;
+  letter-spacing: 4rpx;
+}
+
+.login-btn {
+  margin-top: 28rpx;
+}
+
+.ph {
+  color: #C9B6B9;
+}
+
+/* tabs */
+.tabs {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20rpx;
+}
+
+.tab-item {
+  padding: 10rpx 34rpx;
+  font-size: 27rpx;
+  color: var(--sub);
+  border-radius: 999rpx;
+}
+
+.tab-item.on {
+  background: var(--accent);
+  color: #fff;
+  font-weight: 600;
+}
+
+.tab-exit {
+  margin-left: auto;
+  font-size: 23rpx;
+  color: var(--sub);
+}
+
+.status-bar {
+  white-space: nowrap;
+  margin-bottom: 20rpx;
+}
+
+.status-bar .chip {
+  padding: 8rpx 24rpx;
+  font-size: 23rpx;
+  margin-right: 14rpx;
+}
+
+/* 订单卡 */
+.order {
+  padding: 26rpx 28rpx;
+  margin-bottom: 22rpx;
+}
+
+.o-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8rpx;
+}
+
+.o-no {
+  font-size: 20rpx;
+  color: var(--sub);
+}
+
+.o-status {
+  font-size: 20rpx;
+  color: var(--purple-deep);
+  background: var(--purple-soft);
+  padding: 3rpx 14rpx;
+  border-radius: 999rpx;
+}
+
+.o-status.off {
+  color: var(--sub);
+  background: var(--bg);
+}
+
+.o-status.ship {
+  color: #B4617A;
+  background: var(--accent-soft);
+}
+
+.o-addr {
+  color: #6B6357;
+}
+
+.o-time {
+  font-size: 20rpx;
+  color: var(--sub);
+  margin-top: 10rpx;
+}
+
+.o-style {
+  font-size: 29rpx;
+  font-weight: 600;
+  margin-bottom: 8rpx;
+}
+
+.o-line {
+  font-size: 23rpx;
+  color: #6B6357;
+  padding: 2rpx 0;
+}
+
+.o-remark {
+  color: var(--accent-deep);
+}
+
+.o-contact {
+  display: flex;
+  gap: 16rpx;
+  margin: 10rpx 0 4rpx;
+}
+
+.o-chip {
+  font-size: 21rpx;
+  color: var(--accent-deep);
+  border: 1rpx solid var(--accent);
+  border-radius: 999rpx;
+  padding: 3rpx 16rpx;
+}
+
+.o-imgs {
+  display: flex;
+  gap: 12rpx;
+  margin-top: 12rpx;
+}
+
+.o-imgs image {
+  width: 100rpx;
+  height: 100rpx;
+  border-radius: 10rpx;
+}
+
+/* 操作按钮：和顾客端一样用 view 做点击块，收成小胶囊、贴右下角，别撑满整行 */
+.o-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 12rpx;
+  margin-top: 16rpx;
+}
+
+.o-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  max-width: 100%;
+  height: 54rpx;
+  padding: 0 26rpx;
+  box-sizing: border-box;
+  font-size: 24rpx;
+  line-height: 1;
+  white-space: nowrap;
+  color: var(--accent-deep);
+  background: transparent;
+  border: 1rpx solid var(--accent);
+  border-radius: 999rpx;
+}
+
+/* 主操作（待确认 / 制作完成 …）用实心粉底，和「取消」区分开 */
+.o-btn.solid {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+
+/* 发货区 */
+.ship-box {
+  margin-top: 20rpx;
+  padding: 20rpx;
+  background: var(--bg);
+  border-radius: 16rpx;
+}
+
+.ship-title {
+  font-size: 22rpx;
+  color: var(--sub);
+  margin-bottom: 10rpx;
+}
+
+.ship-picker {
+  background: #fff;
+  border: 1rpx solid var(--line);
+  border-radius: 12rpx;
+  padding: 12rpx 18rpx;
+  font-size: 24rpx;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10rpx;
+}
+
+.ship-input {
+  height: 64rpx;
+  line-height: 64rpx;
+  padding: 0 18rpx;
+  box-sizing: border-box;
+  background: #fff;
+  border: 1rpx solid var(--line);
+  border-radius: 12rpx;
+  font-size: 24rpx;
+}
+
+.ship-btn {
+  margin-top: 12rpx;
+  font-size: 25rpx;
+  line-height: 2.2;
+}
+
+.arrow {
+  color: #C9B6B9;
+}
+
+/* 商品行 */
+.prow {
+  display: flex;
+  padding: 20rpx;
+  margin-bottom: 20rpx;
+}
+
+.p-img {
+  width: 150rpx;
+  height: 150rpx;
+  border-radius: 14rpx;
+  flex-shrink: 0;
+}
+
+.p-main {
+  flex: 1;
+  padding-left: 20rpx;
+}
+
+.p-name {
+  font-size: 27rpx;
+  font-weight: 600;
+  height: 56rpx;
+  line-height: 56rpx;
+  border-bottom: 1rpx dashed var(--line);
+}
+
+.p-price-row {
+  display: flex;
+  align-items: baseline;
+  margin-top: 10rpx;
+}
+
+.p-symbol {
+  color: var(--accent-deep);
+  font-size: 22rpx;
+}
+
+.p-price {
+  color: var(--accent-deep);
+  font-size: 30rpx;
+  font-weight: 700;
+  width: 160rpx;
+  height: 52rpx;
+  line-height: 52rpx;
+  border-bottom: 1rpx dashed var(--line);
+}
+
+.p-days {
+  margin-left: auto;
+  font-size: 21rpx;
+  color: var(--sub);
+}
+
+.p-switches {
+  display: flex;
+  gap: 28rpx;
+  margin-top: 12rpx;
+}
+
+.p-sw {
+  display: flex;
+  align-items: center;
+  gap: 8rpx;
+  font-size: 21rpx;
+  color: var(--sub);
+}
+
+.p-sw switch {
+  transform: scale(0.62);
+  transform-origin: left center;
+}
+
+.p-change {
+  margin-top: 8rpx;
+  font-size: 22rpx;
+  color: var(--accent-deep);
+}
+
+.p-tag {
+  font-size: 20rpx;
+  color: var(--sub);
+  margin-right: 4rpx;
+}
+
+.p-div {
+  font-size: 22rpx;
+  color: var(--line);
+  margin: 0 12rpx;
+}
+
+.p-field {
+  margin-top: 12rpx;
+}
+
+.p-field.col {
+  display: block;
+}
+
+.p-k {
+  font-size: 20rpx;
+  color: var(--sub);
+  display: block;
+  margin-bottom: 4rpx;
+}
+
+.p-input {
+  height: 52rpx;
+  line-height: 52rpx;
+  font-size: 23rpx;
+  color: var(--ink);
+  border-bottom: 1rpx dashed var(--line);
+}
+
+.p-textarea {
+  width: 100%;
+  min-height: 90rpx;
+  font-size: 23rpx;
+  line-height: 1.6;
+  color: var(--ink);
+  background: var(--bg);
+  border-radius: 12rpx;
+  padding: 12rpx 16rpx;
+  box-sizing: border-box;
+}
+
+.p-actions {
+  display: flex;
+  gap: 22rpx;
+  flex-wrap: wrap;
+}
+
+/* 面料图面板 */
+.fb-panel {
+  margin-top: 14rpx;
+  padding: 14rpx;
+  background: var(--bg);
+  border-radius: 14rpx;
+}
+
+/* 普通 / 缎面 分开配布 */
+.fb-grades {
+  display: flex;
+  margin-bottom: 10rpx;
+}
+
+.fb-grade {
+  flex: 1;
+  margin-right: 12rpx;
+  padding: 12rpx 0;
+  text-align: center;
+  font-size: 24rpx;
+  color: var(--sub);
+  background: #fff;
+  border: 2rpx solid var(--line);
+  border-radius: 12rpx;
+}
+
+.fb-grade:last-child {
+  margin-right: 0;
+}
+
+.fb-grade.on {
+  background: var(--accent-soft);
+  border-color: var(--accent);
+  color: var(--accent-deep);
+  font-weight: 600;
+}
+
+.fb-tip {
+  font-size: 20rpx;
+  color: var(--sub);
+  margin-bottom: 14rpx;
+}
+
+.fb-none {
+  width: 100%;
+  padding: 16rpx 0;
+  font-size: 21rpx;
+  color: var(--sub);
+  line-height: 1.5;
+}
+
+.fb-row-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10rpx;
+}
+
+.fb-row-t {
+  font-size: 22rpx;
+  font-weight: 600;
+  color: var(--purple-deep);
+}
+
+.fb-add {
+  font-size: 22rpx;
+  color: var(--accent-deep);
+}
+
+.fb-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12rpx;
+  margin-bottom: 16rpx;
+}
+
+.fb-thumb {
+  position: relative;
+  width: 120rpx;
+}
+
+.fb-thumb image {
+  width: 120rpx;
+  height: 120rpx;
+  border-radius: 10rpx;
+  display: block;
+}
+
+.fb-input {
+  width: 120rpx;
+  height: 40rpx;
+  line-height: 40rpx;
+  font-size: 19rpx;
+  color: var(--ink);
+  margin-top: 4rpx;
+  text-align: center;
+}
+
+.fb-del {
+  position: absolute;
+  top: -8rpx;
+  right: -8rpx;
+  width: 34rpx;
+  height: 34rpx;
+  line-height: 30rpx;
+  text-align: center;
+  border-radius: 50%;
+  background: rgba(91, 70, 54, 0.65);
+  color: #fff;
+  font-size: 24rpx;
+}
+
+.p-tip {
+  text-align: center;
+  font-size: 21rpx;
+  color: var(--sub);
+  margin: 16rpx 0 40rpx;
+}
+
+/* 保存修改 */
+.p-save-row {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  margin-top: 16rpx;
+}
+
+.p-dirty {
+  font-size: 21rpx;
+  color: var(--accent-deep);
+  margin-right: auto;
+}
+
+.p-save {
+  margin: 0;
+  font-size: 24rpx;
+  line-height: 2.4;
+  padding: 0 40rpx;
+}

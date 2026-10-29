@@ -1,0 +1,39 @@
+<view class="page-pad">
+  <view class="card story-card">
+    <image class="story-img" src="/assets/about-fabric.jpg" mode="aspectFill" />
+    <view class="story-text">
+      <view class="story-title serif">一间慢慢做东西的小铺</view>
+      <view class="story-body">小铺只有我一个人，从选布、裁剪到缝制都是自己来。因为都是手工，所以每件东西都限量，也都有小小的不同。愿意等几天的话，我们可以一起做出一件刚好属于你的东西。</view>
+    </view>
+  </view>
+
+  <view class="section-title"><text class="zh serif">一件东西怎么做出来</text><text class="en">PROCESS</text></view>
+  <view class="card proc-card">
+    <view class="proc" wx:for="{{process}}" wx:key="t">
+      <view class="proc-t">{{item.t}}</view>
+      <view class="proc-d">{{item.d}}</view>
+    </view>
+  </view>
+
+  <view class="section-title"><text class="zh serif">找到我</text><text class="en">CONTACT</text></view>
+  <view class="card contact-card">
+    <view class="c-row" bindtap="copyWechat">
+      <text class="c-k">微信号</text>
+      <text class="c-v">{{wechat}}</text>
+      <text class="c-copy">复制</text>
+    </view>
+    <view class="c-row">
+      <text class="c-k">发货</text>
+      <text class="c-v">满 69 包邮 · 不满补 6r 运费</text>
+    </view>
+    <view class="c-row">
+      <text class="c-k">坐标</text>
+      <text class="c-v">{{place}}</text>
+    </view>
+  </view>
+
+  <view class="foot-note">手工定制商品，不支持无理由退换。</view>
+
+  <!-- 店主入口：改价格 / 填物流单号 都在这里 -->
+  <view class="admin-entry" bindtap="goAdmin">店主入口</view>
+</view>

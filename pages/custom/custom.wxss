@@ -1,0 +1,254 @@
+.form-card {
+  padding: 36rpx;
+}
+
+/* 购物车带过来的作品 */
+.ck-item {
+  display: flex;
+  padding: 18rpx 0;
+  border-bottom: 1rpx dashed var(--line);
+}
+
+.ck-img {
+  width: 130rpx;
+  height: 130rpx;
+  border-radius: 16rpx;
+  flex-shrink: 0;
+  margin-right: 20rpx;
+}
+
+.ck-main {
+  flex: 1;
+  min-width: 0;
+}
+
+.ck-name {
+  font-size: 29rpx;
+  font-weight: 600;
+  margin-bottom: 8rpx;
+}
+
+.ck-spec {
+  font-size: 22rpx;
+  color: var(--sub);
+  line-height: 1.5;
+}
+
+.ck-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-top: 8rpx;
+}
+
+.ck-price {
+  font-size: 28rpx;
+  font-weight: 700;
+  color: var(--accent-deep);
+}
+
+.ck-qty {
+  font-size: 24rpx;
+  color: var(--sub);
+}
+
+.f-label {
+  font-size: 29rpx;
+  font-weight: 600;
+  margin: 28rpx 0 14rpx;
+}
+
+.f-label.plain {
+  margin-top: 0;
+}
+
+.f-label.first {
+  margin-top: 0;
+}
+
+/* 单行输入框：外面套一个定高的框，里面的 input 撑满。
+   微信 input 自带默认高度，直接给 padding 容易把字裁掉，套一层最稳 */
+.f-input-box {
+  display: flex;
+  align-items: center;
+  height: 100rpx;
+  padding: 0 24rpx;
+  box-sizing: border-box;
+  background: var(--bg);
+  border: 1rpx solid var(--line);
+  border-radius: 16rpx;
+}
+
+.f-input {
+  flex: 1;
+  height: 100rpx;
+  line-height: 100rpx;
+  padding: 0;
+  border: none;
+  background: transparent;
+  font-size: 28rpx;
+  color: var(--ink);
+}
+
+.f-textarea {
+  width: 100%;
+  box-sizing: border-box;
+  background: var(--bg);
+  border: 1rpx solid var(--line);
+  border-radius: 16rpx;
+  padding: 20rpx 24rpx;
+  height: 160rpx;
+  font-size: 28rpx;
+}
+
+/* 备注用矮一点的框（要放得下两行提示词） */
+.f-textarea.sm {
+  height: 140rpx;
+}
+
+/* 备注的灰色提示：单独一层盖在框里，分两行显示，点下去不会挡住输入 */
+.f-area {
+  position: relative;
+}
+
+.f-area-ph {
+  position: absolute;
+  left: 24rpx;
+  top: 20rpx;
+  right: 24rpx;
+  font-size: 28rpx;
+  line-height: 1.62;
+  color: #B8B0A2;
+  pointer-events: none;
+}
+
+.ph {
+  color: #B8B0A2;
+}
+
+.f-switch {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 32rpx;
+}
+
+.f-hint {
+  font-size: 24rpx;
+  color: var(--sub);
+  margin-top: 8rpx;
+}
+
+/* 费用明细 */
+.fee-card {
+  margin-top: 24rpx;
+  padding: 12rpx 32rpx 20rpx;
+}
+
+.fee-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 12rpx 0;
+  font-size: 26rpx;
+}
+
+.fee-row.total {
+  border-top: 1rpx dashed var(--line);
+  margin-top: 6rpx;
+  padding-top: 18rpx;
+}
+
+.fee-k {
+  color: var(--sub);
+}
+
+.fee-row.total .fee-k {
+  color: var(--ink);
+  font-weight: 600;
+  font-size: 28rpx;
+}
+
+.fee-v {
+  color: var(--ink);
+}
+
+.fee-total {
+  font-size: 40rpx;
+  font-weight: 700;
+  color: var(--accent);
+}
+
+.submit {
+  margin-top: 32rpx;
+}
+
+.submit-note {
+  text-align: center;
+  font-size: 24rpx;
+  color: var(--sub);
+  margin-top: 20rpx;
+  line-height: 1.6;
+}
+
+/* 提交成功弹窗：自己的卡片，字号和断行都自己说了算 */
+.done-mask {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  z-index: 60;
+  background: rgba(74, 55, 40, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.done-card {
+  width: 552rpx;
+  padding-top: 46rpx;
+  background: #fff;
+  border-radius: 30rpx;
+  overflow: hidden;
+  box-shadow: 0 18rpx 52rpx rgba(150, 100, 110, 0.24);
+}
+
+.done-t {
+  text-align: center;
+  font-size: 34rpx;
+  font-weight: 600;
+  color: var(--ink);
+  line-height: 1.5;
+  padding: 0 36rpx;
+}
+
+.done-b {
+  text-align: center;
+  font-size: 27rpx;
+  color: var(--sub);
+  line-height: 1.9;
+  padding: 16rpx 36rpx 40rpx;
+}
+
+.done-btns {
+  display: flex;
+  border-top: 1rpx solid var(--line);
+}
+
+.done-btn {
+  flex: 1;
+  text-align: center;
+  font-size: 30rpx;
+  color: #8C7360;
+  padding: 26rpx 0;
+}
+
+.done-btn + .done-btn {
+  border-left: 1rpx solid var(--line);
+}
+
+.done-btn.ok {
+  color: var(--accent-deep);
+  font-weight: 600;
+}

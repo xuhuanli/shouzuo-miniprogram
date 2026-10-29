@@ -1,0 +1,13 @@
+# 微信开发者工具的个人本地设置（每台电脑不一样）
+project.private.config.json
+
+# 依赖与构建产物
+node_modules/
+miniprogram_npm/
+cloudfunctions/*/node_modules/
+
+# 系统 / 编辑器杂项
+.DS_Store
+*.log
+.idea/
+.vscode/

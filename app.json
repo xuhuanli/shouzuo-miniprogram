@@ -1,0 +1,34 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/gallery/gallery",
+    "pages/detail/detail",
+    "pages/cart/cart",
+    "pages/custom/custom",
+    "pages/orders/orders",
+    "pages/about/about",
+    "pages/admin/admin"
+  ],
+  "window": {
+    "navigationBarBackgroundColor": "#FBF3F4",
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "饭团手作",
+    "backgroundColor": "#FBF3F4",
+    "backgroundTextStyle": "dark"
+  },
+  "tabBar": {
+    "color": "#A38B6A",
+    "selectedColor": "#D97A93",
+    "backgroundColor": "#FDF7EA",
+    "borderStyle": "white",
+    "list": [
+      { "pagePath": "pages/index/index", "text": "首页" },
+      { "pagePath": "pages/gallery/gallery", "text": "作品" },
+      { "pagePath": "pages/cart/cart", "text": "购物车" },
+      { "pagePath": "pages/orders/orders", "text": "我的" }
+    ]
+  },
+  "style": "v2",
+  "lazyCodeLoading": "requiredComponents",
+  "sitemapLocation": "sitemap.json"
+}

@@ -1,0 +1,183 @@
+<view class="page-pad">
+  <!-- 未配置云开发 -->
+  <view class="card tip-card" wx:if="{{envMissing}}">
+    <view class="tip-t">还没接云开发</view>
+    <view class="tip-b">请在工程根目录的 config.js 里填上云开发环境 ID，然后把云函数 admin 部署上去。填好后这个页面才能管理订单和商品。</view>
+  </view>
+
+  <!-- 登录 -->
+  <view class="card login-card" wx:elif="{{!logged}}">
+    <view class="login-t serif">店主管理</view>
+    <view class="login-b">输口令进入，只有你能看到订单</view>
+    <input class="login-input" password value="{{pass}}" placeholder="管理口令" placeholder-class="ph" bindinput="onPassInput" />
+    <button class="btn-primary login-btn" bindtap="login">进入</button>
+  </view>
+
+  <block wx:else>
+    <!-- 顶部切换 -->
+    <view class="tabs">
+      <view class="tab-item {{tab === 'orders' ? 'on' : ''}}" data-tab="orders" bindtap="switchTab">订单</view>
+      <view class="tab-item {{tab === 'products' ? 'on' : ''}}" data-tab="products" bindtap="switchTab">商品</view>
+      <view class="tab-exit" bindtap="logout">退出</view>
+    </view>
+
+    <!-- ============ 订单 ============ -->
+    <block wx:if="{{tab === 'orders'}}">
+      <scroll-view class="status-bar" scroll-x enable-flex>
+        <view
+          class="chip {{statusFilter === item ? 'on' : ''}}"
+          wx:for="{{statusTabs}}"
+          wx:key="*this"
+          data-s="{{item}}"
+          bindtap="filterStatus"
+        >{{item}}</view>
+      </scroll-view>
+
+      <view class="empty" wx:if="{{!orders.length && !loading}}" style="padding:60rpx 0">这个状态下还没有订单</view>
+
+      <view class="order card" wx:for="{{orders}}" wx:key="id" wx:for-index="oi">
+        <view class="o-head">
+          <text class="o-no">{{item.no}}</text>
+          <text
+            class="o-status {{item.status === '已取消' ? 'off' : ''}} {{item.status === '已发货' || item.status === '已完成' ? 'ship' : ''}}"
+          >{{item.status}}</text>
+        </view>
+
+        <view class="o-style">{{item.styleName}}</view>
+        <view class="o-line">{{item.grade || '普通'}}　× {{item.qty}}<text wx:if="{{item.tableFabric}}">　·　表布 {{item.tableFabric}}</text><text wx:if="{{item.liningFabric}}">　·　里布 {{item.liningFabric}}</text></view>
+        <view class="o-line" wx:if="{{item.urgent}}">加急</view>
+        <view class="o-line">{{item.priceEstimate}}</view>
+
+        <view class="o-contact">
+          <text wx:if="{{item.nickname}}" class="o-chip" data-v="{{item.nickname}}" bindtap="copyText">微信昵称 {{item.nickname}}</text>
+        </view>
+        <view class="o-line o-addr" wx:if="{{item.receiver}}" data-v="{{item.receiver}}" bindtap="copyText">收货：{{item.receiver}}</view>
+        <view class="o-line o-remark" wx:if="{{item.remark}}">备注：{{item.remark}}</view>
+
+        <!-- 状态流转按钮：待确认 → 制作中 → 待发货 -->
+        <view class="o-actions" wx:if="{{item.actionLabel || item.canCancel}}">
+          <view
+            class="o-btn solid"
+            wx:if="{{item.actionLabel}}"
+            data-id="{{item.id}}"
+            data-status="{{item.actionTo}}"
+            bindtap="setStatus"
+          >{{item.actionLabel}}</view>
+          <view
+            class="o-btn"
+            wx:if="{{item.canCancel}}"
+            data-id="{{item.id}}"
+            data-status="已取消"
+            bindtap="setStatus"
+          >取消</view>
+        </view>
+
+        <!-- 发货：选快递 + 填单号 -->
+        <view class="ship-box" wx:if="{{item.needShip}}">
+          <view class="ship-title">发货</view>
+          <picker range="{{expressList}}" value="{{item.expressIndex}}" data-index="{{oi}}" bindchange="onExpressChange">
+            <view class="ship-picker">{{item.express || expressList[item.expressIndex]}}<text class="arrow">▾</text></view>
+          </picker>
+          <input class="ship-input" value="{{item.trackingNo}}" data-index="{{oi}}" bindinput="onTrackInput" placeholder="物流单号" placeholder-class="ph" />
+          <button class="btn-primary ship-btn" data-index="{{oi}}" bindtap="saveTracking">{{item.shipBtn}}</button>
+        </view>
+
+        <view class="o-line o-time" wx:if="{{item.createdAtText}}">下单时间 {{item.createdAtText}}</view>
+      </view>
+    </block>
+
+    <!-- ============ 商品 ============ -->
+    <block wx:else>
+      <view class="card tip-card" wx:if="{{!products.length}}">
+        <view class="tip-t">云端还没有作品</view>
+        <view class="tip-b">可以先把当前 3 件作品导入云数据库，之后在这里改价格、换图、改文案、上下架。</view>
+        <button class="btn-primary seed-btn" bindtap="seedProducts">导入示例作品</button>
+      </view>
+
+      <view class="prow card" wx:for="{{products}}" wx:key="_id" wx:for-index="pi">
+        <image class="p-img" src="{{item.img}}" mode="aspectFill" data-src="{{item.img}}" bindtap="previewImg" />
+        <view class="p-main">
+          <input class="p-name" value="{{item.name}}" data-index="{{pi}}" data-field="name" bindinput="onProductField" />
+
+          <view class="p-price-row">
+            <text class="p-tag">普通</text>
+            <text class="p-symbol">¥</text>
+            <input class="p-price" type="digit" value="{{item.grades[0].price}}" data-index="{{pi}}" data-field="price0" bindinput="onProductField" />
+            <text class="p-div">/</text>
+            <text class="p-tag">缎面</text>
+            <text class="p-symbol">¥</text>
+            <input class="p-price" type="digit" value="{{item.grades[1].price}}" data-index="{{pi}}" data-field="price1" bindinput="onProductField" />
+          </view>
+
+          <view class="p-field">
+            <text class="p-k">尺寸</text>
+            <input class="p-input" value="{{item.size}}" placeholder="比如 约 12 × 9 × 4 cm" placeholder-class="ph" data-index="{{pi}}" data-field="size" bindinput="onProductField" />
+          </view>
+
+          <view class="p-field col">
+            <text class="p-k">关于这件作品</text>
+            <textarea class="p-textarea" value="{{item.desc}}" maxlength="300" auto-height placeholder="写给客人看的介绍，改完记得点下面的保存修改" placeholder-class="ph" data-index="{{pi}}" data-field="desc" bindinput="onProductField" />
+          </view>
+
+          <view class="p-switches">
+            <view class="p-sw">
+              <text>上架</text>
+              <switch checked="{{item.onSale !== false}}" color="#EC8FA5" data-id="{{item._id}}" data-index="{{pi}}" bindchange="toggleOnSale" />
+            </view>
+            <view class="p-sw">
+              <text>首页精选</text>
+              <switch checked="{{item.featured}}" color="#B5A1C6" data-id="{{item._id}}" data-index="{{pi}}" bindchange="toggleFeatured" />
+            </view>
+          </view>
+
+          <view class="p-actions">
+            <view class="p-change" data-index="{{pi}}" bindtap="toggleFabricPanel">面料图 ({{item.tableFabrics.length + item.liningFabrics.length}}) ▾</view>
+            <view class="p-change" data-id="{{item._id}}" bindtap="changeImage">更换封面</view>
+          </view>
+
+          <!-- 面料图管理：普通 / 缎面 分开配布 -->
+          <view class="fb-panel" wx:if="{{item.fabOpen}}">
+            <view class="fb-grades">
+              <view class="fb-grade {{item.fabGrade === '普通' ? 'on' : ''}}" data-index="{{pi}}" data-g="普通" bindtap="switchFabGrade">普通</view>
+              <view class="fb-grade {{item.fabGrade === '缎面' ? 'on' : ''}}" data-index="{{pi}}" data-g="缎面" bindtap="switchFabGrade">缎面</view>
+            </view>
+            <view class="fb-tip">正在配「{{item.fabGrade}}」的布料，两档的布互不影响</view>
+
+            <view class="fb-row-head">
+              <text class="fb-row-t">表布</text>
+              <text class="fb-add" data-index="{{pi}}" data-kind="table" bindtap="addFabric">＋ 加图</text>
+            </view>
+            <view class="fb-row">
+              <view class="fb-thumb" wx:for="{{item.tableView}}" wx:for-item="f" wx:for-index="fi" wx:key="fi">
+                <image src="{{f.img}}" mode="aspectFill" data-src="{{f.img}}" bindtap="previewImg" />
+                <input class="fb-input" value="{{f.n}}" placeholder="面料名" placeholder-class="ph" data-index="{{pi}}" data-kind="table" data-fi="{{f.fi}}" bindinput="onFabricName" />
+                <view class="fb-del" data-index="{{pi}}" data-kind="table" data-fi="{{f.fi}}" catchtap="removeFabric">×</view>
+              </view>
+              <view class="fb-none" wx:if="{{!item.tableView.length}}">「{{item.fabGrade}}」还没有表布，点右上「＋ 加图」传一张</view>
+            </view>
+
+            <view class="fb-row-head">
+              <text class="fb-row-t">里布</text>
+              <text class="fb-add" data-index="{{pi}}" data-kind="lining" bindtap="addFabric">＋ 加图</text>
+            </view>
+            <view class="fb-row">
+              <view class="fb-thumb" wx:for="{{item.liningView}}" wx:for-item="f" wx:for-index="fi" wx:key="fi">
+                <image src="{{f.img}}" mode="aspectFill" data-src="{{f.img}}" bindtap="previewImg" />
+                <input class="fb-input" value="{{f.n}}" placeholder="面料名" placeholder-class="ph" data-index="{{pi}}" data-kind="lining" data-fi="{{f.fi}}" bindinput="onFabricName" />
+                <view class="fb-del" data-index="{{pi}}" data-kind="lining" data-fi="{{f.fi}}" catchtap="removeFabric">×</view>
+              </view>
+              <view class="fb-none" wx:if="{{!item.liningView.length}}">「{{item.fabGrade}}」还没有里布，点右上「＋ 加图」传一张</view>
+            </view>
+          </view>
+
+          <!-- 保存按钮：改完必须点它才写入，点空白不会自动保存 -->
+          <view class="p-save-row">
+            <text class="p-dirty" wx:if="{{item.dirty}}">有改动没保存</text>
+            <button class="btn-primary p-save" data-index="{{pi}}" bindtap="saveProductCard">保存修改</button>
+          </view>
+        </view>
+      </view>
+      <view class="p-tip">名称、价格、尺寸、文案、面料名改完，一定要点每件作品下面的「保存修改」。图片选了就自动传，不占包体。</view>
+    </block>
+  </block>
+</view>

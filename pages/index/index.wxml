@@ -1,0 +1,49 @@
+<view class="lace-page">
+  <view class="page-pad">
+    <!-- 顶部品牌区：店招 -->
+    <view class="hero card">
+      <view class="hero-text">
+        <view class="hero-name serif">饭团手作</view>
+        <view class="hero-slogan">你好！你的总裁上线了！</view>
+      </view>
+    </view>
+
+    <!-- 关于小铺：客人须知 -->
+    <view class="notice card">
+      <view class="notice-tape"></view>
+      <view class="notice-title serif">关于小铺</view>
+      <view class="notice-item" wx:for="{{notices}}" wx:key="*this">· {{item}}</view>
+      <view class="notice-end serif">
+        <text class="notice-end-line" wx:for="{{noticeEndLines}}" wx:key="*this">{{item}}</text>
+      </view>
+    </view>
+
+    <!-- 定制流程 -->
+    <view class="section-title"><text class="zh serif">定制流程</text><text class="en">HOW IT WORKS</text></view>
+    <view class="steps card">
+      <view class="step" wx:for="{{steps}}" wx:key="title">
+        <view class="step-icon serif">{{item.icon}}</view>
+        <view class="step-title">{{item.title}}</view>
+        <view class="step-desc">{{item.desc}}</view>
+      </view>
+    </view>
+
+    <!-- 精选款式 -->
+    <view class="section-title"><text class="zh serif">精选款式</text><text class="en">PICKED FOR YOU</text></view>
+    <view class="feat">
+      <view class="feat-item card" wx:for="{{featured}}" wx:key="id" bindtap="goDetail" data-id="{{item.id}}">
+        <image class="feat-img" src="{{item.img}}" mode="aspectFill" />
+        <view class="feat-info">
+          <view class="feat-name">{{item.name}}</view>
+          <view class="feat-desc">{{item.summary}}</view>
+          <view class="feat-row">
+            <text class="price">¥{{item.price}}<text class="unit"> {{item.unit}}</text></text>
+          </view>
+        </view>
+      </view>
+    </view>
+    <button class="btn-ghost more-btn" bindtap="goGallery">查看全部作品 →</button>
+
+    <view class="about-link" bindtap="goAbout">了解小店的故事 →</view>
+  </view>
+</view>

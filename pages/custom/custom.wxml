@@ -1,0 +1,80 @@
+<view class="page-pad">
+  <view class="card form-card">
+
+    <!-- 购物车带过来的作品 -->
+    <view class="f-label first">要预约的作品（{{count}} 件）</view>
+    <view class="ck-item" wx:for="{{items}}" wx:key="key">
+      <image class="ck-img" src="{{item.img}}" mode="aspectFill" />
+      <view class="ck-main">
+        <view class="ck-name">{{item.styleName}}</view>
+        <view class="ck-spec">{{item.grade}}　表布 {{item.tableFabric || '待定'}}　里布 {{item.liningFabric || '待定'}}</view>
+        <view class="ck-row">
+          <text class="ck-price">¥{{item.price}}</text>
+          <text class="ck-qty">× {{item.qty}}</text>
+        </view>
+      </view>
+    </view>
+
+    <view class="f-switch">
+      <view>
+        <view class="f-label plain">加急</view>
+        <view class="f-hint">加急约 +20%，以店主确认为准</view>
+      </view>
+      <switch checked="{{urgent}}" color="#EC8FA5" bindchange="onUrgent" />
+    </view>
+
+    <view class="f-label">备注</view>
+    <view class="f-area">
+      <textarea class="f-textarea sm" value="{{remark}}" maxlength="200" bindinput="onRemark" />
+      <!-- 占位提示单独一个层，方便分成两行 -->
+      <view class="f-area-ph" wx:if="{{!remark}}">
+        <view>若是要送朋友的生日礼物等等原因</view>
+        <view>记得提前告知最晚发货时间</view>
+      </view>
+    </view>
+
+    <view class="f-label">微信昵称</view>
+    <view class="f-input-box">
+      <input class="f-input" value="{{nickname}}" placeholder="你的微信昵称" placeholder-class="ph" maxlength="30" bindinput="onNickname" />
+    </view>
+
+    <view class="f-label">收货信息</view>
+    <textarea class="f-textarea" value="{{receiver}}" maxlength="200" placeholder="收件人姓名 / 手机号 / 详细地址" placeholder-class="ph" bindinput="onReceiver" />
+  </view>
+
+  <view class="card fee-card">
+    <view class="fee-row">
+      <text class="fee-k">商品合计</text>
+      <text class="fee-v">¥{{goodsTotal}}</text>
+    </view>
+    <view class="fee-row" wx:if="{{urgentFee}}">
+      <text class="fee-k">加急费（20%）</text>
+      <text class="fee-v">¥{{urgentFee}}</text>
+    </view>
+    <view class="fee-row" wx:if="{{shipping}}">
+      <text class="fee-k">运费（不满 69 补 6r）</text>
+      <text class="fee-v">¥{{shipping}}</text>
+    </view>
+    <view class="fee-row total">
+      <text class="fee-k">参考价</text>
+      <text class="fee-total">¥{{payTotal}}</text>
+    </view>
+  </view>
+
+  <button class="btn-primary submit" bindtap="submit" disabled="{{submitting}}">确定预约</button>
+  <view class="submit-note">提交后店主会联系你确认款式与工期，小程序内不涉及在线支付。</view>
+</view>
+
+<!-- 提交成功的弹窗：自己画一个，换行和字号都可控（系统弹窗对换行支持不稳） -->
+<view class="done-mask" wx:if="{{doneShow}}">
+  <view class="done-card">
+    <view class="done-t">{{doneTitle}}</view>
+    <view class="done-b">
+      <view wx:for="{{doneLines}}" wx:key="*this">{{item}}</view>
+    </view>
+    <view class="done-btns">
+      <view class="done-btn" bindtap="doneBack">返回</view>
+      <view class="done-btn ok" bindtap="doneOrders">我的预约</view>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,61 @@
+<view class="page-pad">
+
+  <block wx:if="{{list.length}}">
+    <view class="cart-head">
+      <text class="cart-count">共 {{list.length}} 款</text>
+      <text class="cart-manage" bindtap="toggleManage">{{manage ? '完成' : '管理'}}</text>
+    </view>
+
+    <view class="cart-item card" wx:for="{{list}}" wx:key="key">
+      <view class="ck {{item.checked ? 'on' : ''}}" data-key="{{item.key}}" bindtap="toggleItem">
+        <text wx:if="{{item.checked}}">✓</text>
+      </view>
+
+      <image class="ci-img" src="{{item.img}}" mode="aspectFill" data-key="{{item.key}}" />
+
+      <view class="ci-main">
+        <view class="ci-name">{{item.styleName}}</view>
+        <view class="ci-spec">{{item.grade}}　表布 {{item.tableFabric || '待定'}}　里布 {{item.liningFabric || '待定'}}</view>
+        <view class="ci-row">
+          <text class="ci-price">¥{{item.price}}</text>
+          <view class="qty">
+            <view class="qty-btn" data-key="{{item.key}}" bindtap="minus">−</view>
+            <input class="qty-num" type="number" value="{{item.qty}}" data-key="{{item.key}}" bindblur="onQty" />
+            <view class="qty-btn" data-key="{{item.key}}" bindtap="plus">＋</view>
+          </view>
+        </view>
+      </view>
+
+      <view class="ci-del" wx:if="{{manage}}" data-key="{{item.key}}" bindtap="removeOne">×</view>
+    </view>
+
+    <view class="cart-tip">同款同材质会自动合并成一条；改数量后合计会跟着变。</view>
+  </block>
+
+  <view class="empty" wx:else>
+    <view class="icon">🧺</view>
+    <view>购物车还是空的</view>
+    <button class="btn-primary empty-btn" bindtap="goGallery">去作品里挑一件</button>
+  </view>
+
+  <!-- 底部结算条 -->
+  <view class="cart-bar" wx:if="{{list.length}}">
+    <view class="bar-all" bindtap="toggleAll">
+      <view class="ck {{allChecked ? 'on' : ''}}"><text wx:if="{{allChecked}}">✓</text></view>
+      <text>全选</text>
+    </view>
+
+    <view class="bar-sum" wx:if="{{!manage}}">
+      <text class="bar-sum-k">合计</text>
+      <text class="bar-sum-v">¥{{total}}</text>
+    </view>
+    <view class="bar-sum" wx:else>
+      <text class="bar-sum-k">已勾选</text>
+      <text class="bar-sum-v">{{checkedCount}} 件</text>
+    </view>
+
+    <button class="btn-primary bar-go bar-ok" wx:if="{{!manage}}" bindtap="checkout">确定预约</button>
+    <button class="btn-ghost bar-go del" wx:else bindtap="removeChecked">删除</button>
+  </view>
+  <view class="safe-space" wx:if="{{list.length}}"></view>
+</view>

@@ -1,0 +1,92 @@
+.cat-bar {
+  white-space: nowrap;
+  margin-bottom: 28rpx;
+}
+
+.cat-bar .chip {
+  padding: 10rpx 30rpx;
+  font-size: 28rpx;
+  margin-right: 16rpx;
+}
+
+.grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.g-item {
+  width: 48.4%;
+  margin-bottom: 24rpx;
+}
+
+.g-img {
+  width: 100%;
+  height: 330rpx;
+  display: block;
+}
+
+.g-info {
+  padding: 20rpx 24rpx 24rpx;
+}
+
+.g-name {
+  font-size: 29rpx;
+  font-weight: 600;
+}
+
+.g-desc {
+  font-size: 23rpx;
+  color: var(--sub);
+  margin: 6rpx 0 12rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.g-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.g-row .price {
+  font-size: 33rpx;
+}
+
+.unit {
+  font-size: 22rpx;
+  font-weight: 400;
+  color: var(--sub);
+}
+
+.days {
+  font-size: 22rpx;
+  color: var(--sub);
+}
+
+/* 底部许愿条：配色不变（还是原来的粉底白字），只把形状拉成一条细长条 */
+.wish-bar {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 84rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--accent);
+  z-index: 20;
+}
+
+.wish-txt {
+  font-size: 26rpx;
+  color: #fff;
+  letter-spacing: 2rpx;
+  line-height: 1;
+}
+
+/* 留出这条的高度，别让最后一行作品被挡住 */
+.page-pad {
+  padding-bottom: 128rpx;
+}

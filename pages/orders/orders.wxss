@@ -1,0 +1,160 @@
+.order {
+  padding: 32rpx 36rpx 20rpx;
+  margin-bottom: 28rpx;
+}
+
+.o-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12rpx;
+}
+
+.o-no {
+  font-size: 24rpx;
+  color: var(--sub);
+  letter-spacing: 1rpx;
+}
+
+.o-status {
+  font-size: 24rpx;
+  color: var(--purple-deep);
+  background: var(--purple-soft);
+  padding: 4rpx 18rpx;
+  border-radius: 999rpx;
+}
+
+.o-status.off {
+  color: var(--sub);
+  background: var(--bg);
+}
+
+.o-status.ship {
+  color: #b4617a;
+  background: var(--accent-soft);
+}
+
+/* 物流信息块 */
+.o-track {
+  margin-top: 16rpx;
+  padding: 20rpx 24rpx;
+  background: var(--purple-soft);
+  border-radius: 16rpx;
+}
+
+.o-track-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8rpx;
+}
+
+.o-track-t {
+  font-size: 22rpx;
+  color: var(--purple-deep);
+}
+
+.o-track-copy {
+  font-size: 22rpx;
+  color: var(--accent-deep);
+}
+
+.o-track-body {
+  font-size: 26rpx;
+  letter-spacing: 1rpx;
+}
+
+.o-style {
+  font-size: 35rpx;
+  font-weight: 600;
+  margin-bottom: 12rpx;
+}
+
+.o-line {
+  font-size: 26rpx;
+  color: #6B6357;
+  padding: 4rpx 0;
+}
+
+.o-imgs {
+  display: flex;
+  gap: 16rpx;
+  margin-top: 16rpx;
+}
+
+.o-imgs image {
+  width: 120rpx;
+  height: 120rpx;
+  border-radius: 12rpx;
+}
+
+/* 操作按钮：用 view 做点击块（微信 button 自带默认宽度会被拉宽、整排往左溢出），
+   只占字的宽度，贴右下角，离卡片下边缘只留一点空 */
+.o-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 12rpx;
+  margin-top: 16rpx;
+}
+
+.o-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  max-width: 100%;
+  height: 52rpx;
+  padding: 0 24rpx;
+  box-sizing: border-box;
+  font-size: 23rpx;
+  line-height: 1;
+  white-space: nowrap;
+  color: var(--accent-deep);
+  background: transparent;
+  border: 1rpx solid var(--accent);
+  border-radius: 999rpx;
+}
+
+.o-btn.del {
+  color: #B06B7E;
+  border-color: #EFC3CD;
+}
+
+/* 页面底部：说明文字 + 关于小店入口，钉在底部导航栏正上方（tabBar 页面的 bottom:0 就是导航栏上沿） */
+.o-foot {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 20;
+  padding: 14rpx 32rpx;
+  background: rgba(251, 243, 244, 0.96);
+  border-top: 1rpx solid var(--line);
+}
+
+.tip {
+  text-align: center;
+  font-size: 22rpx;
+  line-height: 1.5;
+  color: var(--sub);
+  margin-bottom: 10rpx;
+}
+
+.empty-btn {
+  margin-top: 40rpx;
+  width: 320rpx;
+}
+
+.about-entry {
+  text-align: center;
+  font-size: 24rpx;
+  line-height: 1.4;
+  color: var(--accent-deep);
+}
+
+/* 给钉在底部的说明条让出位置，最后一张订单不会被盖住 */
+.page-pad {
+  padding-bottom: 190rpx;
+}

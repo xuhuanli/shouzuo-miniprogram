@@ -1,0 +1,34 @@
+<view class="page-pad">
+  <scroll-view class="cat-bar" scroll-x enable-flex>
+    <view
+      class="chip {{active === item ? 'on' : ''}}"
+      wx:for="{{cats}}"
+      wx:key="*this"
+      bindtap="tapCat"
+      data-cat="{{item}}"
+    >{{item}}</view>
+  </scroll-view>
+
+  <view class="grid">
+    <view class="g-item card" wx:for="{{list}}" wx:key="id" bindtap="goDetail" data-id="{{item.id}}">
+      <image class="g-img" src="{{item.img}}" mode="aspectFill" />
+      <view class="g-info">
+        <view class="g-name">{{item.name}}</view>
+        <view class="g-desc">{{item.summary}}</view>
+        <view class="g-row">
+          <text class="price">¥{{item.price}}<text class="unit"> {{item.unit}}</text></text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view class="empty" wx:if="{{list.length === 0}}">
+    <view class="icon">🧵</view>
+    <view>这个分类还没有作品，去定制一个吧</view>
+  </view>
+
+  <!-- 底部许愿条：原来的粉底白字，只把形状拉成一条细长条 -->
+  <view class="wish-bar" bindtap="wish">
+    <text class="wish-txt">没找到想要的？联系主理人许愿！</text>
+  </view>
+</view>
