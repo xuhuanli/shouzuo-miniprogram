@@ -22,6 +22,7 @@ Page({
     liningList: [],
     tableIndex: 0,
     liningIndex: 0,
+    qty: 1,
     tableFallback: false,
     liningFallback: false
   },
@@ -98,9 +99,19 @@ Page({
     this.setData({ liningIndex });
   },
 
-  // 加入购物车：把当前选好的 材质/表布/里布 一起带过去
+  // 数量最少 1，到 1 时减号置灰、点了没反应
+  minusQty() {
+    if (this.data.qty <= 1) return;
+    this.setData({ qty: this.data.qty - 1 });
+  },
+
+  plusQty() {
+    this.setData({ qty: this.data.qty + 1 });
+  },
+
+  // 加入购物车：把当前选好的 材质/表布/里布/数量 一起带过去
   addToCart() {
-    const { p, gradeIndex, tableIndex, liningIndex, tableList, liningList } = this.data;
+    const { p, gradeIndex, tableIndex, liningIndex, tableList, liningList, qty } = this.data;
     const g = p.grades[gradeIndex];
     const table = tableList[tableIndex];
     const lining = liningList[liningIndex];
@@ -116,9 +127,9 @@ Page({
       tableIndex,
       liningFabric: lining ? lining.n : '',
       liningIndex,
-      qty: 1
+      qty
     });
 
-    wx.showToast({ title: '已加入购物车', icon: 'none' });
+    wx.showToast({ title: qty > 1 ? '已加入购物车 ×' + qty : '已加入购物车', icon: 'none' });
   }
 });

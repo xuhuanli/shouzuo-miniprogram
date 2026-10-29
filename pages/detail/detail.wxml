@@ -98,9 +98,13 @@
   </view>
 
   <view class="bottom-bar">
-    <view class="bar-price">
-      <text class="price">¥{{price}}</text>
-      <text class="bar-unit">起</text>
+    <!-- 单价 × 数量：材质已经选定，价格是确定的，所以不再写「起」 -->
+    <text class="price bar-price">¥{{price}}</text>
+    <view class="bar-times"></view>
+    <view class="stepper">
+      <view class="st-btn minus {{qty <= 1 ? 'disabled' : ''}}" hover-class="{{qty <= 1 ? '' : 'st-press'}}" bindtap="minusQty"></view>
+      <text class="st-num">{{qty}}</text>
+      <view class="st-btn plus" hover-class="st-press" bindtap="plusQty"></view>
     </view>
     <button class="btn-primary bar-btn" bindtap="addToCart">加入购物车</button>
   </view>

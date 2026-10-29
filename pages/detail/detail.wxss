@@ -241,18 +241,114 @@
 }
 
 .bar-price {
-  flex: 1;
+  flex-shrink: 0;
+  font-size: 36rpx;
 }
 
-.bar-unit {
-  font-size: 24rpx;
-  color: var(--sub);
-  margin-left: 6rpx;
+/* 乘号：两根圆头短线交叉画出来，粗细、圆角能控，和旁边的加减号是一套 */
+.bar-times {
+  position: relative;
+  flex-shrink: 0;
+  width: 22rpx;
+  height: 22rpx;
+  margin: 0 18rpx;
 }
 
+.bar-times::before,
+.bar-times::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 24rpx;
+  height: 4rpx;
+  margin: -2rpx 0 0 -12rpx;
+  border-radius: 2rpx;
+  background: var(--purple);
+}
+
+.bar-times::before {
+  transform: rotate(45deg);
+}
+
+.bar-times::after {
+  transform: rotate(-45deg);
+}
+
+/* 数量：− 数字 ＋，数字不能手输，最少 1 */
+.stepper {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  height: 60rpx;
+  padding: 0 6rpx;
+  border-radius: 999rpx;
+  background: var(--accent-soft);
+}
+
+.st-btn {
+  position: relative;
+  width: 48rpx;
+  height: 48rpx;
+  border-radius: 50%;
+  background: #fff;
+  transition: transform 0.15s ease, opacity 0.2s ease;
+}
+
+/* 加减号同样用短线画，粗细、颜色和乘号一套 */
+.st-btn::before,
+.st-btn::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 20rpx;
+  height: 4rpx;
+  margin: -2rpx 0 0 -10rpx;
+  border-radius: 2rpx;
+  background: var(--accent-deep);
+}
+
+.st-btn.minus::after {
+  display: none;
+}
+
+.st-btn.plus::after {
+  transform: rotate(90deg);
+}
+
+.st-btn.disabled {
+  opacity: 0.4;
+}
+
+.st-btn.disabled::before {
+  background: var(--sub);
+}
+
+.st-press {
+  transform: scale(0.86);
+}
+
+.st-num {
+  min-width: 52rpx;
+  text-align: center;
+  font-size: 30rpx;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+/* 一行要放 价格 × 数量 + 按钮，按钮收窄一点、字号小一号 */
 .bar-btn {
   flex: 1;
-  margin: 0;
+  min-width: 0;
+  /* 微信 button 自带固定宽度，不清掉的话 flex 收不窄 */
+  width: auto !important;
+  margin: 0 0 0 24rpx;
+  padding: 0;
+  height: 84rpx;
+  line-height: 84rpx;
+  font-size: 30rpx;
+  white-space: nowrap;
 }
 
 .safe-space {
